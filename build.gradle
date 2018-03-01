@@ -1,0 +1,22 @@
+apply plugin: 'scala'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.scala-lang:scala-library:2.12.4')
+}
+
+task run(type: JavaExec, dependsOn: classes) {
+
+    def arguments = ["arg1"]
+    arguments.addAll(System.getProperty("exec.args", "").split("\\|").findAll { it != ""})
+    args arguments
+    main = 'HashCode2018'
+    standardInput = System.in
+    standardOutput = System.out
+    classpath sourceSets.main.runtimeClasspath
+    classpath configurations.runtime
+}
+
